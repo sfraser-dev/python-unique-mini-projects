@@ -1,0 +1,91 @@
+import yu0005_ceasar_art
+import bcolors
+
+def caesar(start_text: str, shift_amount: int, cipher_direction: str) -> None:
+    """ Encoding and decoding Caesar cipher function """
+    end_text = ""
+    if cipher_direction == "decode" or cipher_direction == "d":
+        shift_amount *= -1
+    for char in start_text:
+        position = alphabet.index(char)
+        new_position = position + shift_amount
+        end_text += alphabet[new_position]
+    if cipher_direction == "decode" or cipher_direction == "d":
+        print(f"\nHere's the decoded result: {bcolors.bcolors.OKCYAN}{end_text}{bcolors.bcolors.ENDC}")
+    else:
+        print(f"\nHere's the encoded result: {bcolors.bcolors.OKCYAN}{end_text}{bcolors.bcolors.ENDC}")
+
+if __name__ == "__main__":
+    keep_ciphering = True
+    while keep_ciphering:
+
+        number_of_alphabets = 2
+        alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        # repeat the alphabet 
+        for _ in range(0,number_of_alphabets-1):
+            alphabet += alphabet
+
+        # Print the logo from art.py when the program starts.
+        print(yu0005_ceasar_art.logo)
+
+        while True:
+            try:
+                direction = input("\nType 'encode' ('e') to encode, type 'decode' ('d') to decrypt: ")
+                if direction in ["encode", "e", "decode", "d"] and type(direction)==str:
+                    break
+            except Exception as e:
+                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                continue
+            else:
+                print(f"{bcolors.bcolors.FAIL}Please input 'encode', 'e', 'decode' or 'd'.{bcolors.bcolors.ENDC}\n")
+                continue
+
+        acceptable_text = False 
+        while True:
+            try:
+                text = input("\nType your message: ").lower()
+                for i in text:
+                    if i not in alphabet:
+                        acceptable_text = False
+                        break
+                    else:
+                        acceptable_text = True
+                if acceptable_text == True:
+                    break
+            except Exception as e:
+                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                continue
+            else:
+                print(f"{bcolors.bcolors.FAIL}Text must consist of alphabetical characters only{bcolors.bcolors.ENDC}")
+                acceptable_text = True
+                continue
+
+        while True:
+            try:
+                shift = int(input("\nType the shift number: "))
+                if shift >=  1 and shift <= 25 and type(shift)==int:
+                    break
+            except Exception as e:
+                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                print(f"{bcolors.bcolors.FAIL}Please input an integer.{bcolors.bcolors.ENDC}")
+                continue
+            else:
+                print(f"{bcolors.bcolors.FAIL}Please input an integer in range 1 to 25 inclusive.{bcolors.bcolors.ENDC}")
+                continue
+
+        caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+
+        while True:
+            try:
+                run_again = input("\nWould you like to cipher again, 'yes' ('y') or 'no' ('n')? ").lower()
+                if run_again == "no" or run_again == "n":
+                    keep_ciphering = False
+                    break
+                elif run_again == "yes" or run_again == "y":
+                    break
+            except Exception as e:
+                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                continue
+            else:
+                print(f"{bcolors.bcolors.FAIL}Please enter 'yes' ('y') or 'no' ('n'){bcolors.bcolors.ENDC}")
+                continue
