@@ -1,8 +1,8 @@
-import yu0005_ceasar_art
-import bcolors
+import yu0005_ceasar_cipher_art
+from bcolors import bcolors as bcols
 
 def caesar(start_text: str, shift_amount: int, cipher_direction: str) -> None:
-    """ Encoding and decoding Caesar cipher function """
+    """Encoding and decoding Caesar Cipher function."""
     end_text = ""
     if cipher_direction == "decode" or cipher_direction == "d":
         shift_amount *= -1
@@ -11,11 +11,12 @@ def caesar(start_text: str, shift_amount: int, cipher_direction: str) -> None:
         new_position = position + shift_amount
         end_text += alphabet[new_position]
     if cipher_direction == "decode" or cipher_direction == "d":
-        print(f"\nHere's the decoded result: {bcolors.bcolors.OKCYAN}{end_text}{bcolors.bcolors.ENDC}")
+        print(f"\nHere's the decoded result: {bcols.OKCYAN}{end_text}{bcols.ENDC}")
     else:
-        print(f"\nHere's the encoded result: {bcolors.bcolors.OKCYAN}{end_text}{bcolors.bcolors.ENDC}")
+        print(f"\nHere's the encoded result: {bcols.OKCYAN}{end_text}{bcols.ENDC}")
 
 if __name__ == "__main__":
+    """Main function."""
     keep_ciphering = True
     while keep_ciphering:
 
@@ -26,7 +27,7 @@ if __name__ == "__main__":
             alphabet += alphabet
 
         # Print the logo from art.py when the program starts.
-        print(yu0005_ceasar_art.logo)
+        print(yu0005_ceasar_cipher_art.logo)
 
         while True:
             try:
@@ -34,29 +35,27 @@ if __name__ == "__main__":
                 if direction in ["encode", "e", "decode", "d"] and type(direction)==str:
                     break
             except Exception as e:
-                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                print(e)
                 continue
             else:
-                print(f"{bcolors.bcolors.FAIL}Please input 'encode', 'e', 'decode' or 'd'.{bcolors.bcolors.ENDC}\n")
+                print(f"{bcols.FAIL}Please input 'encode', 'e', 'decode' or 'd'.{bcols.ENDC}\n")
                 continue
 
-        acceptable_text = False 
+        acceptable_text = True
         while True:
             try:
                 text = input("\nType your message: ").lower()
                 for i in text:
-                    if i not in alphabet:
+                    if i not in alphabet:   # only accept letters/text from the alphabet
                         acceptable_text = False
-                        break
-                    else:
-                        acceptable_text = True
-                if acceptable_text == True:
-                    break
+                        break   # break for loop
+                else:   # for/else, executed if not broken out of for loop above
+                    break   # break while loop
             except Exception as e:
-                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                print(e)
                 continue
             else:
-                print(f"{bcolors.bcolors.FAIL}Text must consist of alphabetical characters only{bcolors.bcolors.ENDC}")
+                print(f"{bcols.FAIL}Text must consist of alphabetical characters only{bcols.ENDC}")
                 acceptable_text = True
                 continue
 
@@ -65,12 +64,11 @@ if __name__ == "__main__":
                 shift = int(input("\nType the shift number: "))
                 if shift >=  1 and shift <= 25 and type(shift)==int:
                     break
-            except Exception as e:
-                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
-                print(f"{bcolors.bcolors.FAIL}Please input an integer.{bcolors.bcolors.ENDC}")
+            except ValueError as ve:
+                print(ve)
                 continue
             else:
-                print(f"{bcolors.bcolors.FAIL}Please input an integer in range 1 to 25 inclusive.{bcolors.bcolors.ENDC}")
+                print(f"{bcols.FAIL}Please input an integer in range 1 to 25 inclusive.{bcols.ENDC}")
                 continue
 
         caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
@@ -84,8 +82,8 @@ if __name__ == "__main__":
                 elif run_again == "yes" or run_again == "y":
                     break
             except Exception as e:
-                print(f"{bcolors.bcolors.FAIL}{e}{bcolors.bcolors.ENDC}")
+                print(e)
                 continue
             else:
-                print(f"{bcolors.bcolors.FAIL}Please enter 'yes' ('y') or 'no' ('n'){bcolors.bcolors.ENDC}")
+                print(f"{bcols.FAIL}Please enter 'yes' ('y') or 'no' ('n'){bcols.ENDC}")
                 continue
