@@ -100,4 +100,12 @@ if __name__ == "__main__":
     my_dict[1]=8
     print(my_dict)
 
+# title case
+my_name = "jACk fUNnyMAn bLAcK"
+print(my_name.title())
 
+# limit number of decimal places
+a = 3.45678
+b = 100.34785378957349873987459
+print(f"{a:.2f}")
+print(f"{b:.5f}")
