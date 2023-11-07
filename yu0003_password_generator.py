@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
         while True:
             try:
-                user_input = input("\nGenerate another password, 'yes' ('y') or 'no' ('n')? ")
+                user_input = input("\nGenerate another password, 'yes' ('y') or 'no' ('n')? ").lower()
                 if user_input == "no" or user_input == "n":
                     keep_generating = False
                     break

@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
         while True:
             try:
-                direction = input("\nType 'encode' ('e') to encode, type 'decode' ('d') to decrypt: ")
+                direction = input("\nType 'encode' ('e') to encode, type 'decode' ('d') to decrypt: ").lower()
                 if direction in ["encode", "e", "decode", "d"] and type(direction)==str:
                     break
             except Exception as e:

@@ -54,7 +54,7 @@ if __name__ == "__main__":
         bids[name] = price
         while True:
             try: 
-                should_continue = input("\nAre there any other bidders? Type 'yes' ('y') or 'no' ('n'): ")
+                should_continue = input("\nAre there any other bidders? Type 'yes' ('y') or 'no' ('n'): ").lower()
                 if should_continue == "no" or should_continue == "n":
                     bidding_finished = True
                     find_highest_bidder(bids)
