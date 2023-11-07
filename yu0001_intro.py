@@ -109,3 +109,7 @@ a = 3.45678
 b = 100.34785378957349873987459
 print(f"{a:.2f}")
 print(f"{b:.5f}")
+
+# get dictionary value for the given key - if not present, return 100
+counts = { 'quincy' : 1 , 'mrugesh' : 42, 'beau': 100, '0': 10}
+print(counts.get('kris', 100))
