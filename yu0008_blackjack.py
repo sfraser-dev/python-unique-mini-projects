@@ -123,13 +123,15 @@ class Money():
     
     def decrease_amount(self, bet_size: int) -> None:
         self.amount -= bet_size
-        print(f'\n----------\nPlayer has ${self.amount}')
+        print(f'\n----------\n\nPlayer has ${self.amount}')
         if self.amount > 0:
             print(f'Bet per game is ${bet_size}')
 
-    def increase_amount(self, bet_size: int) -> None:
+    def increase_amount(self, bet_size: int, double_win: str = "") -> None:
         self.amount += bet_size
-        print(f'\n----------\nPlayer has ${self.amount}')
+        if double_win == "double_size":
+            bet_size /= 2   # player gets double winnings for hitting blackjack
+        print(f'\n----------\n\nPlayer has ${self.amount}')
         print(f'Bet per game is ${bet_size}')
 
 def human_play_blackjack(hand: Hand, deck: Deck) -> int:
@@ -204,14 +206,14 @@ if __name__ == '__main__':
         card_two: Card = deck.full_deck.pop()
         card_three: Card = deck.full_deck.pop()
         card_four: Card = deck.full_deck.pop()
-        card_one.suit = 'c' #ME
+        card_one.suit = 'd' #ME
         card_one.rank = 'A'
-        card_one.shorthand = 'cA'
+        card_one.shorthand = 'dA'
         card_one.simple_strength_value = 11
         card_three.suit = 'h'
-        card_three.rank = 'A'
-        card_three.shorthand = 'hA'
-        card_three.simple_strength_value = 11
+        card_three.rank = 'K'
+        card_three.shorthand = 'hK'
+        card_three.simple_strength_value = 10
         player_hand: Hand = Hand('player', card_one, card_three)
         #####
         # card_two.suit = 'c' #ME
@@ -219,9 +221,9 @@ if __name__ == '__main__':
         # card_two.shorthand = 'cA'
         # card_two.simple_strength_value = 11
         # card_four.suit = 'h'
-        # card_four.rank = 'A'
-        # card_four.shorthand = 'hA'
-        # card_four.simple_strength_value = 11
+        # card_four.rank = 'Q'
+        # card_four.shorthand = 'hQ'
+        # card_four.simple_strength_value = 10
         dealer_hand: Hand = Hand('dealer', card_two, card_four)
         # show one of the dealer's cards
         print(f"Dealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}\n\n----------\n")
@@ -231,10 +233,10 @@ if __name__ == '__main__':
         dealer_immediate_21: bool = check_for_two_card_21(dealer_hand)
         if player_immediate_21 == True:
             if dealer_immediate_21 == True:
-                print('Player and dealer both get immediate blackjack - draw')
+                print(f'{bcols.OKCYAN}Player and dealer both get immediate blackjack - draw{bcols.ENDC}')
             else:
-                print('Player gets blackjack - player wins double!')
-                player_money.increase_amount(bet_per_game*2)
+                print(f'{bcols.OKGREEN}Player gets blackjack - player wins double!{bcols.ENDC}')
+                player_money.increase_amount(bet_per_game*2, "double_size")
             continue
 
         human_score: int = human_play_blackjack(player_hand, deck)
@@ -250,7 +252,7 @@ if __name__ == '__main__':
                 player_money.increase_amount(bet_per_game)
 
         if human_score <= 21 and dealer_score <= 21:
-            print(f'\n----------\nPlayer has {bcols.WARNING}{player_hand.score}{bcols.ENDC}')
+            print(f'\n\---------\nPlayer has {bcols.WARNING}{player_hand.score}{bcols.ENDC}')
             print(f'Dealer has {bcols.OKBLUE}{dealer_hand.score}{bcols.ENDC}')
             if (human_score > dealer_score):
                 print(f'{bcols.OKGREEN}Player wins!{bcols.ENDC}')
