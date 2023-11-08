@@ -1,5 +1,6 @@
 import random
 from bcolors import bcolors as bcols
+from yu0003_password_generator_art import logo
 
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -7,7 +8,8 @@ symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
 if __name__ == "__main__":
     """Main function."""
-    print("Welcome to the Password Generator!")
+    print(logo)
+    print(f"{bcols.UNDERLINE}Welcome to the Password Generator!{bcols.ENDC}")
     keep_generating = True
     while keep_generating == True:
 
@@ -67,7 +69,7 @@ if __name__ == "__main__":
 
         while True:
             try:
-                user_input = input("\nGenerate another password, 'yes' ('y') or 'no' ('n')? ").lower()
+                user_input = input(f"\nGenerate another password, {bcols.OKGREEN}'yes' ('y'){bcols.ENDC} or {bcols.FAIL}'no' ('n'){bcols.ENDC}? ").lower()
                 if user_input == "no" or user_input == "n":
                     keep_generating = False
                     break
