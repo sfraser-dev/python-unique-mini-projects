@@ -3,7 +3,9 @@ from yu0008_blackjack_art import logo
 from bcolors import bcolors as bcols
 
 class Deck():
+    """Class representing a deck of cards."""
     def __init__(self) -> None:
+        """Deck constructor"""
         # ('suit', 'rank', blackjack strength/point value)
         self.c2: Card = Card('c', '2', 2)
         self.c3: Card = Card('c', '3', 3)
@@ -64,23 +66,29 @@ class Deck():
         self.full_deck += [self.s2,self.s3,self.s4,self.s5,self.s6,self.s7,self.s8,self.s9,self.st,self.sj,self.sq,self.sk,self.sa]
 
     def __str__(self) -> str:
+        """Deck string dunder."""
         the_str: str = ''
         for card in self.full_deck:
             the_str = the_str + card.shorthand + ' '
         return the_str
 
 class Card():
+    """Class representing a single playing card."""
     def __init__(self, suit: str, rank: str, simple_strength_value: int) -> None:
+        """Card constructor."""
         self.suit: str = suit
         self.rank: str= rank
         self.simple_strength_value: int = simple_strength_value
         self.shorthand: str = f'{self.suit}{self.rank}'
 
     def __str__(self) -> str:
+        """Card string dunder,"""
         return self.shorthand
 
 class Hand():
+    """Class representing the blackjack hand of the player or dealer."""
     def __init__(self, owner: str, card1: Card, card2: Card) -> None:
+        """Hand constructor,"""
         self.owner: str = owner
         self.the_cards: list = [card1, card2]
         self.score: int = 0
@@ -91,6 +99,7 @@ class Hand():
                 self.aces_counter += 1
 
     def __str__(self) -> str:
+        """Hand string dunder."""
         str1: str = (f"{(self.owner).title()}'s hand: ")
         str2: str =''
         for c in self.the_cards:
@@ -103,6 +112,7 @@ class Hand():
         return str3
 
     def twist(self, new_card: Card) -> None:
+        """Method representing a player twisting in balckjack."""
         self.the_cards.append(new_card)
         # handle aces
         if new_card.rank == 'A':
@@ -110,24 +120,29 @@ class Hand():
         self.score += new_card.simple_strength_value
     
     def adjust_score_for_aces(self) -> None:
+        """Method to account for aces (can be 1 or 11) when calculating the score."""
         while self.score > 21 and self.aces_counter > 0:
             self.score -= 10
             self.aces_counter -= 1
 
 class Money():
+    """Class to keep track of the player's money."""
     def __init__(self, amount: int) -> None:
         self.amount: int = amount
     
     def __str__(self) -> str:
+        """Money dunder."""
         return (f'${self.amount}')
     
     def decrease_amount(self, bet_size: int) -> None:
+        """Method to decrease the player's money."""
         self.amount -= bet_size
         print(f'\n----------\n\nPlayer has ${self.amount}')
         if self.amount > 0:
             print(f'Bet per game is ${bet_size}')
 
     def increase_amount(self, bet_size: int, double_win: str = "") -> None:
+        """Method to increase the player's money."""
         self.amount += bet_size
         if double_win == "double_size":
             bet_size /= 2   # player gets double winnings for hitting blackjack
@@ -135,6 +150,7 @@ class Money():
         print(f'Bet per game is ${bet_size}')
 
 def human_play_blackjack(hand: Hand, deck: Deck) -> int:
+    """Function to implement the player playing blackjack."""
     hand.adjust_score_for_aces()
     print(hand)
 
@@ -166,6 +182,7 @@ def human_play_blackjack(hand: Hand, deck: Deck) -> int:
                 return hand.score
 
 def dealer_play_blackjack(hand: Hand, deck: Deck) -> int:
+    """Function to implement the dealer playing blackjack."""
     hand.adjust_score_for_aces()
     print(hand)
 
@@ -178,12 +195,14 @@ def dealer_play_blackjack(hand: Hand, deck: Deck) -> int:
         print(hand)
 
 def check_for_two_card_21(hand: Hand) -> bool:
+    """Function to test if the first two dealt cards hit blackjack (21)."""
     if len(hand.the_cards) == 2 and hand.score == 21:
         return True
     else:
         return False
 
 if __name__ == '__main__':
+    """Main function."""
     # player's money
     player_money: Money = Money(10)
     bet_per_game: int = 2
@@ -206,24 +225,7 @@ if __name__ == '__main__':
         card_two: Card = deck.full_deck.pop()
         card_three: Card = deck.full_deck.pop()
         card_four: Card = deck.full_deck.pop()
-        card_one.suit = 'd' #ME
-        card_one.rank = 'A'
-        card_one.shorthand = 'dA'
-        card_one.simple_strength_value = 11
-        card_three.suit = 'h'
-        card_three.rank = 'K'
-        card_three.shorthand = 'hK'
-        card_three.simple_strength_value = 10
         player_hand: Hand = Hand('player', card_one, card_three)
-        #####
-        # card_two.suit = 'c' #ME
-        # card_two.rank = 'A'
-        # card_two.shorthand = 'cA'
-        # card_two.simple_strength_value = 11
-        # card_four.suit = 'h'
-        # card_four.rank = 'Q'
-        # card_four.shorthand = 'hQ'
-        # card_four.simple_strength_value = 10
         dealer_hand: Hand = Hand('dealer', card_two, card_four)
         # show one of the dealer's cards
         print(f"Dealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}\n\n----------\n")
