@@ -1,6 +1,7 @@
 import random
 from yu0008_blackjack_art import logo
 from bcolors import bcolors as bcols
+import sys
 
 class Deck():
     """Class representing a deck of cards."""
@@ -105,10 +106,15 @@ class Hand():
         for c in self.the_cards:
             str2 += str(c) 
             str2 += ' '
-        if self.owner == "player":
-            str3: str = f"{str1}{bcols.WARNING}{str2}{bcols.ENDC}(score: {self.score})"
-        else:
-            str3: str = f"{str1}{bcols.OKBLUE}{str2}{bcols.ENDC}(score: {self.score})"
+        match self.owner:
+            case "player":
+                str3: str = f"{str1}{bcols.WARNING}{str2}{bcols.ENDC}(score: {self.score})"
+            case "dealer":
+                str3: str = f"{str1}{bcols.OKBLUE}{str2}{bcols.ENDC}(score: {self.score})"
+            case _: 
+                print(f"{bcols.FAIL}Error: unknown owner", file=sys.stderr)
+                sys.exit()
+
         return str3
 
     def twist(self, new_card: Card) -> None:
