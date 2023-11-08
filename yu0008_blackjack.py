@@ -91,7 +91,7 @@ class Hand():
                 self.aces_counter += 1
 
     def __str__(self) -> str:
-        str1: str = (f"\n{(self.owner).title()}'s hand: ")
+        str1: str = (f"{(self.owner).title()}'s hand: ")
         str2: str =''
         for c in self.the_cards:
             str2 += str(c) 
@@ -133,6 +133,7 @@ class Money():
         print(f'Bet per game is ${bet_size}')
 
 def human_play_blackjack(hand: Hand, deck: Deck) -> int:
+    hand.adjust_score_for_aces()
     print(hand)
 
     if hand.score >= 21:
@@ -165,6 +166,7 @@ def human_play_blackjack(hand: Hand, deck: Deck) -> int:
 def dealer_play_blackjack(hand: Hand, deck: Deck) -> int:
     hand.adjust_score_for_aces()
     print(hand)
+
     # dealer gameplay loop
     while True:
         if hand.score >= 17:
@@ -191,9 +193,9 @@ if __name__ == '__main__':
         print(logo)
         print("Let's play blackjack!")
         print("Dealer hits until 17")
-        print("Aces count as 1 or 11")
-        print(f"\nPlayer has ${player_money.amount}")
-        print(f"Bet per game is ${bet_per_game}")
+        print("Aces count as 1 or 11\n\n----------\n")
+        print(f"Player has ${player_money.amount}")
+        print(f"Bet per game is ${bet_per_game}\n\n----------\n")
         # get a deck of cards and shuffle it
         deck: Deck = Deck()
         random.shuffle(deck.full_deck)
@@ -202,38 +204,47 @@ if __name__ == '__main__':
         card_two: Card = deck.full_deck.pop()
         card_three: Card = deck.full_deck.pop()
         card_four: Card = deck.full_deck.pop()
+        card_one.suit = 'c' #ME
+        card_one.rank = 'A'
+        card_one.shorthand = 'cA'
+        card_one.simple_strength_value = 11
+        card_three.suit = 'h'
+        card_three.rank = 'A'
+        card_three.shorthand = 'hA'
+        card_three.simple_strength_value = 11
         player_hand: Hand = Hand('player', card_one, card_three)
-        card_two.suit = 'c' #ME
-        card_two.rank = 'A'
-        card_two.shorthand = 'cA'
-        card_two.simple_strength_value = 11
-        card_four.suit = 'h'
-        card_four.rank = 'A'
-        card_four.simple_strength_value = 11
-        card_four.shorthand = 'hA'
+        #####
+        # card_two.suit = 'c' #ME
+        # card_two.rank = 'A'
+        # card_two.shorthand = 'cA'
+        # card_two.simple_strength_value = 11
+        # card_four.suit = 'h'
+        # card_four.rank = 'A'
+        # card_four.shorthand = 'hA'
+        # card_four.simple_strength_value = 11
         dealer_hand: Hand = Hand('dealer', card_two, card_four)
         # show one of the dealer's cards
-        print(f"\nDealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}")
+        print(f"Dealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}\n\n----------\n")
 
         # checking to see if player wins immediately for having blackjack
         player_immediate_21: bool = check_for_two_card_21(player_hand)
         dealer_immediate_21: bool = check_for_two_card_21(dealer_hand)
         if player_immediate_21 == True:
             if dealer_immediate_21 == True:
-                print('player and dealer both get immediate blackjack - draw')
+                print('Player and dealer both get immediate blackjack - draw')
             else:
-                print('player gets blackjack - player wins double!')
+                print('Player gets blackjack - player wins double!')
                 player_money.increase_amount(bet_per_game*2)
             continue
 
         human_score: int = human_play_blackjack(player_hand, deck)
-        print(f"\n----------\n{(player_hand.owner).title()}'s score is: {bcols.WARNING}{player_hand.score}{bcols.ENDC}")
+        print(f"{(player_hand.owner).title()}'s final score is: {bcols.WARNING}{player_hand.score}{bcols.ENDC}\n----------\n")
         if (human_score) > 21:
             print(f'{bcols.FAIL}Player bust - dealer wins!{bcols.ENDC}')
             player_money.decrease_amount(bet_per_game)
         else:
             dealer_score: int = dealer_play_blackjack(dealer_hand, deck)
-            print(f"\n----------\n{(dealer_hand.owner).title()}'s score is: {bcols.OKBLUE}{dealer_hand.score}{bcols.ENDC}")
+            print(f"{(dealer_hand.owner).title()}'s final score is: {bcols.OKBLUE}{dealer_hand.score}{bcols.ENDC}\n----------\n")
             if dealer_score > 21:
                 print(f'{bcols.OKGREEN}Dealer bust - player wins!{bcols.ENDC}')
                 player_money.increase_amount(bet_per_game)
