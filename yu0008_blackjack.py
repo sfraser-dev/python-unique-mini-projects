@@ -87,6 +87,8 @@ class Hand():
         self.aces_counter: int = 0
         for c in self.the_cards:
             self.score += c.simple_strength_value
+            if c.simple_strength_value == 11:   # ace
+                self.aces_counter += 1
 
     def __str__(self) -> str:
         str1: str = (f"\n{(self.owner).title()}'s hand: ")
@@ -161,6 +163,7 @@ def human_play_blackjack(hand: Hand, deck: Deck) -> int:
                 return hand.score
 
 def dealer_play_blackjack(hand: Hand, deck: Deck) -> int:
+    hand.adjust_score_for_aces()
     print(hand)
     # dealer gameplay loop
     while True:
@@ -200,14 +203,14 @@ if __name__ == '__main__':
         card_three: Card = deck.full_deck.pop()
         card_four: Card = deck.full_deck.pop()
         player_hand: Hand = Hand('player', card_one, card_three)
-        # card_two.suit = 'c' #ME
-        # card_two.rank = 'A'
-        # card_two.shorthand = 'cA'
-        # card_two.simple_strength_value = 11
-        # card_four.suit = 'h'
-        # card_four.rank = 'A'
-        # card_four.simple_strength_value = 11
-        # card_four.shorthand = 'hA'
+        card_two.suit = 'c' #ME
+        card_two.rank = 'A'
+        card_two.shorthand = 'cA'
+        card_two.simple_strength_value = 11
+        card_four.suit = 'h'
+        card_four.rank = 'A'
+        card_four.simple_strength_value = 11
+        card_four.shorthand = 'hA'
         dealer_hand: Hand = Hand('dealer', card_two, card_four)
         # show one of the dealer's cards
         print(f"\nDealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}")
