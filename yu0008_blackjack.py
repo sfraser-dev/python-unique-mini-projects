@@ -4,6 +4,7 @@ from bcolors import bcolors as bcols
 
 class Deck():
     def __init__(self) -> None:
+        # ('suit', 'rank', blackjack strength/point value)
         self.c2: Card = Card('c', '2', 2)
         self.c3: Card = Card('c', '3', 3)
         self.c4: Card = Card('c', '4', 4)
@@ -85,7 +86,7 @@ class Hand():
         self.score: int = 0
         self.aces_counter: int = 0
         for c in self.the_cards:
-            self.score+= c.simple_strength_value
+            self.score += c.simple_strength_value
 
     def __str__(self) -> str:
         str1: str = (f"\n{(self.owner).title()}'s hand: ")
@@ -93,7 +94,6 @@ class Hand():
         for c in self.the_cards:
             str2 += str(c) 
             str2 += ' '
-        # str3: str = str1 + str2 + '(score: ' + str(self.score) + ')'
         if self.owner == "player":
             str3: str = f"{str1}{bcols.WARNING}{str2}{bcols.ENDC}(score: {self.score})"
         else:
@@ -161,13 +161,14 @@ def human_play_blackjack(hand: Hand, deck: Deck) -> int:
                 return hand.score
 
 def dealer_play_blackjack(hand: Hand, deck: Deck) -> int:
+    print(hand)
     # dealer gameplay loop
     while True:
-        print(hand)
         if hand.score >= 17:
             return hand.score
         hand.twist(deck.full_deck.pop())
         hand.adjust_score_for_aces()
+        print(hand)
 
 def check_for_two_card_21(hand: Hand) -> bool:
     if len(hand.the_cards) == 2 and hand.score == 21:
@@ -199,6 +200,14 @@ if __name__ == '__main__':
         card_three: Card = deck.full_deck.pop()
         card_four: Card = deck.full_deck.pop()
         player_hand: Hand = Hand('player', card_one, card_three)
+        # card_two.suit = 'c' #ME
+        # card_two.rank = 'A'
+        # card_two.shorthand = 'cA'
+        # card_two.simple_strength_value = 11
+        # card_four.suit = 'h'
+        # card_four.rank = 'A'
+        # card_four.simple_strength_value = 11
+        # card_four.shorthand = 'hA'
         dealer_hand: Hand = Hand('dealer', card_two, card_four)
         # show one of the dealer's cards
         print(f"\nDealer's hand: {bcols.OKBLUE}{dealer_hand.the_cards[0].shorthand} XX{bcols.ENDC}")
