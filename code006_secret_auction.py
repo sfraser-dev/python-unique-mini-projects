@@ -1,5 +1,5 @@
 import os
-from yu0006_secret_auction_art import logo
+from code006_secret_auction_art import logo
 from bcolors import bcolors as bcols
 
 def clear() -> None:

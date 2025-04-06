@@ -1,4 +1,4 @@
-import yu0005_ceasar_cipher_art
+import code005_ceasar_cipher_art
 from bcolors import bcolors as bcols
 
 def caesar(start_text: str, shift_amount: int, cipher_direction: str) -> None:
@@ -27,7 +27,7 @@ if __name__ == "__main__":
             alphabet += alphabet
 
         # Print the logo from art.py when the program starts.
-        print(yu0005_ceasar_cipher_art.logo)
+        print(code005_ceasar_cipher_art.logo)
 
         while True:
             try:

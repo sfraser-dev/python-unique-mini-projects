@@ -1,5 +1,5 @@
 import random
-import yu0001_pi_module
+import code001_pi_module
 
 if __name__ == "__main__":
     """Main function."""
@@ -15,7 +15,7 @@ if __name__ == "__main__":
     print(f"rand int = {rand_int}")
 
     # my own module
-    print(f"pi = {yu0001_pi_module.pi}")
+    print(f"pi = {code001_pi_module.pi}")
 
     # list
     my_list = ["a", "b", "c", "d"]

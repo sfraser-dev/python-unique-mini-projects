@@ -1,7 +1,7 @@
 import random
-from yu0004_hangman_words import word_list
+from code004_hangman_words import word_list
 from bcolors import bcolors as bcols
-from yu0004_hangman_art import logo
+from code004_hangman_art import logo
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
                 print(f"\n{bcols.OKGREEN}You win.{bcols.ENDC}")
 
             # Import the stages from hangman_art.py.
-            from yu0004_hangman_art import stages
+            from code004_hangman_art import stages
             print(stages[lives])
 
         while True:

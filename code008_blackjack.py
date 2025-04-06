@@ -1,5 +1,5 @@
 import random
-from yu0008_blackjack_art import logo
+from code008_blackjack_art import logo
 from bcolors import bcolors as bcols
 import sys
 
@@ -260,7 +260,7 @@ if __name__ == '__main__':
                 player_money.increase_amount(bet_per_game)
 
         if human_score <= 21 and dealer_score <= 21:
-            print(f'\n\---------\nPlayer has {bcols.WARNING}{player_hand.score}{bcols.ENDC}')
+            print(f'\n--------\nPlayer has {bcols.WARNING}{player_hand.score}{bcols.ENDC}')
             print(f'Dealer has {bcols.OKBLUE}{dealer_hand.score}{bcols.ENDC}')
             if (human_score > dealer_score):
                 print(f'{bcols.OKGREEN}Player wins!{bcols.ENDC}')

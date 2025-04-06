@@ -1,6 +1,6 @@
 import os
 import sys
-from yu0007_calculator_art import logo
+from code007_calculator_art import logo
 from bcolors import bcolors as bcols
 
 def clear() -> None:
