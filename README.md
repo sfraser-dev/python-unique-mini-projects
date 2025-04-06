@@ -1,6 +1,6 @@
 # Python Projects
 
-Various Python projects (part of Yu Udemy Course "100 Days of Code").
+Various standalone mini Python projects ("100 Days of Code").
 
 ## Setup
 
